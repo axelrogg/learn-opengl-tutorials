@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Iinclude
+CFLAGS = -Iext -Iinclude
 LIBS = -lGL -lglfw3 -lX11 -lpthread -lXrandr -lXi -ldl -lm
 
 SRCDIR = src
