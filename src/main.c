@@ -115,7 +115,7 @@ int main() {
     }
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    char *backgroundHex = "#010104";
+    char *backgroundHex = BACKGROUND_COLOR_HEX;
     ColorRGB backgroundRGB;
     colorHexStringToColorRGB(backgroundHex, &backgroundRGB);
     while (!glfwWindowShouldClose(window)) {
