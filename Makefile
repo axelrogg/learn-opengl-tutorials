@@ -3,7 +3,7 @@ CFLAGS = -Iext -Iinclude
 LIBS = -lGL -lglfw3 -lX11 -lpthread -lXrandr -lXi -ldl -lm
 
 SRCDIR = src
-SOURCES = $(SRCDIR)/main.c $(SRCDIR)/glad.c
+SOURCES = $(SRCDIR)/main.c $(SRCDIR)/glad.c $(SRCDIR)/utils.c
 OUTPUT = snake
 
 all: $(OUTPUT)
