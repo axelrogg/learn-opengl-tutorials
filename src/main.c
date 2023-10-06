@@ -5,9 +5,7 @@
 
 #include "utils.h"
 
-#ifndef SNAKE_VERSION
-    #define SNAKE_VERSION "0.0.1"
-#endif
+#define SNAKE_VERSION "0.0.1"
 
 #ifdef _WIN64
     #define OS_NAME "Windows 64-bit"
@@ -21,7 +19,6 @@
     #define OS_NAME "Unknown"
 #endif
 
-
 /**
  *  @brief GLFW function: Whenever the window size changed (by the OS or user
  *  resize) this callback function executes.
@@ -32,7 +29,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
  *  @brief Process all input: Query GLFW whether relevant keys are pressed/
  *  released, and react accordingly.
 */
-void processInput(GLFWwindow *window);
+void process_input(GLFWwindow *window);
 
 /**
  * @brief Initialize GLFW
@@ -42,7 +39,7 @@ void processInput(GLFWwindow *window);
  * smaller subset of OpenGL features without backwards-compatible features we
  * don't need.
 */
-void initGLFW();
+void init_GLFW();
 
 /**
  * @brief Initialize GLAD.
@@ -51,13 +48,13 @@ void initGLFW();
  * a `GLFWwindow` window has been selected as current context (by calling
  * `glfwMakeContextCurrent`.)
 */
-int initGLAD();
+int init_GLAD();
 
 int main(void) {
     printf("Starting Snake v%s\n----------\n", SNAKE_VERSION);
     printf("Operating System: %s\n----------\n", OS_NAME);
 
-    initGLFW();
+    init_GLFW();
     GLFWwindow* window = glfwCreateWindow(800, 600, "Snake", NULL, NULL);
     if (window == NULL) {
         printf("Error: Failed to create GLFW window");
@@ -65,7 +62,7 @@ int main(void) {
         return -1;
     }
     glfwMakeContextCurrent(window);
-    if (initGLAD() == -1) {
+    if (init_GLAD() == -1) {
         return -1;
     }
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
@@ -87,7 +84,7 @@ int main(void) {
     return 0;
 }
 
-void processInput(GLFWwindow *window) {
+void process_input(GLFWwindow *window) {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, 1);
 }
@@ -96,7 +93,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
-void initGLFW() {
+void init_GLFW() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -104,7 +101,7 @@ void initGLFW() {
     // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);  // MacOS only
 }
 
-int initGLAD() {
+int init_GLAD() {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         printf("Error: Failed to initialize GLAD");
         return -1;
