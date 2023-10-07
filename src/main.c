@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <glad/glad.h>
@@ -135,13 +136,16 @@ int main(void) {
              0.0f,  0.5f, 0.0f
         };
 
+        float timeValue = glfwGetTime();
+        float greenValue = fabs(sin((timeValue)));
+        int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
+        glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
         // use our shader program
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
-
 
         glfwSwapBuffers(window);
         glfwPollEvents();
