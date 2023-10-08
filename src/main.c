@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "shaders.h"
 #include "utils.h"
 
 #define SNAKE_VERSION "0.0.1"
@@ -68,50 +69,7 @@ int main(void) {
     }
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    // Build and compile shaders
-
-    // vertex shader
-    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    const char *vertexShaderSource = read_shader("vertex.glsl");
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-
-    int success;
-    char infoLog[512];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        printf("Error: ShaderError: Vertex shader compilation failed.\n%s\n", infoLog);
-    }
-
-    // fragment shader
-    // fragment shader is all about calculating the color output of our pixels
-    unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    const char *fragmentShaderSource = read_shader("fragment.glsl");
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-        printf("Error: ShaderError: Fragment shader compilation failed.\n%s\n", infoLog);
-    }
-
-    // Shader program (linking multiple shaders)
-    unsigned int shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        printf("Error: ShaderError: Shader linking failed.\n%s\n", infoLog);
-    }
-
-    // after linking the shaders, we no longer need them
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-    free((char *)vertexShaderSource);
-    free((char *)fragmentShaderSource);
+    unsigned int shaderProgramID = create_shader_program();
 
     unsigned int VAO, VBO;
     glGenVertexArrays(1, &VAO);
@@ -138,12 +96,12 @@ int main(void) {
 
         float timeValue = glfwGetTime();
         float greenValue = fabs(sin((timeValue)));
-        int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
+        int vertexColorLocation = glGetUniformLocation(shaderProgramID, "ourColor");
         glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
         // use our shader program
-        glUseProgram(shaderProgram);
+        use_shader_program(shaderProgramID);
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 

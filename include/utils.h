@@ -46,11 +46,4 @@ void colorHexStringToColorRGB(char *hex, ColorRGB *color);
 */
 const char *read_file(char *fname);
 
-/**
- *  @brief Reads the contents of a shader inside `shaders/` directory, and
- *         returns a buffer with its content.
- *  @param fname Name of the shader file.
-*/
-const char *read_shader(char *fname);
-
 #endif

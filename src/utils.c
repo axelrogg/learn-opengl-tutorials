@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 
 #include "utils.h"
 
@@ -13,6 +12,8 @@ void colorHexStringToColorRGB(char *hex, ColorRGB *color) {
 }
 
 const char *read_file(char *fname) {
+    printf("Reading file: %s\n", fname);
+
     FILE *file = fopen(fname, "r");
     if (file == NULL) {
         printf("Error: Could not open file %s\n", fname);
@@ -34,13 +35,4 @@ const char *read_file(char *fname) {
         i++;
     }
     return buff;
-}
-
-const char *read_shader(char *fname) {
-    // ! size of cwd string is completely arbitrary!!. So far no problems.
-    char cwd[300 * sizeof(char)];
-    getcwd(cwd, sizeof(cwd));
-    char filename[strlen(cwd) + strlen("/shaders/") + strlen(fname)];
-    sprintf(filename, "%s%s%s", cwd, "/shaders/" ,fname);
-    return read_file(filename);
 }
