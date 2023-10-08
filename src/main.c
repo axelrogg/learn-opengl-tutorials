@@ -165,6 +165,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 }
 
 void init_GLFW() {
+    printf("Starting GLFW v3.38\n----------\n");
+
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -173,6 +175,8 @@ void init_GLFW() {
 }
 
 int init_GLAD() {
+    printf("Starting Glad v4.6\n----------\n");
+
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         printf("Error: Failed to initialize GLAD");
         return -1;
