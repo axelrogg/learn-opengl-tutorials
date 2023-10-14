@@ -7,11 +7,8 @@
 #include "utils.h"
 
 const char *read_shader_file(char *fname) {
-    // ! size of cwd string is completely arbitrary!!. So far no problems.
-    char cwd[300 * sizeof(char)];
-    getcwd(cwd, sizeof(cwd));
-    char filename[strlen(cwd) + strlen("/shaders/") + strlen(fname)];
-    sprintf(filename, "%s%s%s", cwd, "/shaders/", fname);
+    char filename[strlen("/shaders/") + strlen(fname)];
+    sprintf(filename, "%s%s", "/shaders/", fname);
     return read_file(filename);
 }
 
@@ -20,6 +17,9 @@ unsigned int create_shader_program() {
     printf("Compiling vertex shader...\n");
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     const char *vertexShaderSource = read_shader_file("vertex.glsl");
+    if (vertexShaderSource == NULL) {
+        return 0;
+    }
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
     glCompileShader(vertexShader);
 
@@ -34,6 +34,9 @@ unsigned int create_shader_program() {
     printf("Compiling fragment shader...\n");
     unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     const char *fragmentShaderSource = read_shader_file("fragment.glsl");
+    if (fragmentShaderSource == NULL) {
+        return 0;
+    }
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
     glCompileShader(fragmentShader);
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);

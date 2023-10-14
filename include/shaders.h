@@ -9,8 +9,10 @@
 const char *read_shader_file(char *fname);
 
 /**
- *  @brief Compiles and links all shader sources to a shader program and returns
- *         its ID.
+ *  @brief   Compiles and links all shader sources to a shader program and returns
+ *           its ID.
+ *  @returns Returns the ID of the created shader program, and 0 if some error
+ *           occured.
 */
 unsigned int create_shader_program();
 

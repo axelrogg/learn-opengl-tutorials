@@ -70,6 +70,9 @@ int main(void) {
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     unsigned int shaderProgramID = create_shader_program();
+    if(shaderProgramID == 0) {
+        return -1;
+    }
 
     unsigned int VAO, VBO;
     glGenVertexArrays(1, &VAO);
